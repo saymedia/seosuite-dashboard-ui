@@ -1,0 +1,34 @@
+
+<h4>Check a Site</h4>
+<div class="row">
+  <div class="col-md-6">
+    <div class="input-group">
+      <input type="text" ng-model="crawlUrl" placeholder="Site Url" class="form-control input-lg">
+      <span class="input-group-btn">
+        <button class="btn btn-primary input-lg" type="button" ng-click="crawlSite()">Crawl Site</button>
+      </span>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" ng-model="followInternal"> Follow internal links
+      </label>
+    </div>
+  </div>
+  <div class="col-md-4" ng-show="crawlJobStatus">
+    <h4 ng-class="crawlJobState" ng-bind-html="crawlJobStatus"></h4>
+  </div>
+</div>
+<br/><br/>
+
+<h4>Recent Crawler Jobs</h4>
+<div class="col-md-12 card" ng-repeat="job in jobs" style="margin-bottom: 2px;" ng-click="gotoJob(job.run_id)">
+  <div class="card-body">
+    <h4>
+      <span class="label label-info pull-right">{{job.lint_info}}</span>
+      <span class="label label-warning pull-right">{{job.lint_warn}}</span>
+      <span class="label label-danger pull-right">{{job.lint_error}}</span>
+      <span class="label label-default pull-right">{{job.lint_critical}}</span>
+      {{job.address}}
+    </h4>
+  </div>
+</div>

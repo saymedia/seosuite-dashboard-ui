@@ -1,0 +1,124 @@
+<div class="row">
+    <div class="col-md-3">
+        <div class="datapoint datapoint-default clearfix">
+            <div class="datapoint-value">{{ overview.lint_critical }}</div>
+            <div class="datapoint-label">Critical Issues</div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="datapoint datapoint-danger clearfix">
+            <div class="datapoint-value">{{ overview.lint_error }}</div>
+            <div class="datapoint-label">Errors</div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="datapoint datapoint-warning clearfix">
+            <div class="datapoint-value">{{ overview.lint_warn }}</div>
+            <div class="datapoint-label">Warnings</div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="datapoint datapoint-info clearfix">
+            <div class="datapoint-value">{{ overview.lint_info }}</div>
+            <div class="datapoint-label">Notices</div>
+        </div>
+    </div>
+</div>
+
+<div class="row details">
+    <div class="col-md-10">
+        <div class="row">
+            <div class="col-md-12" ng-show="totalUrlCount > 20">
+                <pagination total-items="totalUrlCount" page="currentPage" items-per-page="itemsPerPage" class="pull-right"></pagination>
+            </div>
+        </div>
+        <div class="row filters" ng-show="filters.length">
+            <div class="col-md-12">
+                <h4>
+                    Fitlers:
+                    <span class="label label-default filter" ng-repeat="filter in filters">
+                        <i class="glyphicon glyphicon-remove" ng-click="removeFilter(filter[0], filter[1])"></i>
+                        {{filter[0]|replace:'_':' '}}: {{filter[1]}}
+                    </span>
+                </h4>
+            </div>
+        </div>
+        <div class="card" ng-repeat="url in urls" ng-click="select(url)"
+            ng-class="{'card-warning': url.status_code != 200, 'card-error': url.status_code == 404}">
+            <div class="card-body clearfix">
+                <h4>
+                  <span class="label label-info pull-right">{{url.lint_info}}</span>
+                  <span class="label label-warning pull-right">{{url.lint_warn}}</span>
+                  <span class="label label-danger pull-right">{{url.lint_error}}</span>
+                  <span class="label label-default pull-right">{{url.lint_critical}}</span>
+                  {{url.address}}
+                </h4>
+                <div ng-show="isActive(url)">
+                    <div class="col-md-10">
+                        <dl>
+                            <dt ng-if="url.canonical">Canonical</dt>
+                            <dd ng-if="url.canonical">{{url.canonical}}</dd>
+                            <dt ng-if="url.title_1">Page Title</dt>
+                            <dd ng-if="url.title_1">{{url.title_1}}</dd>
+                            <dt ng-if="url.meta_description_1">Meta Description</dt>
+                            <dd ng-if="url.meta_description_1">{{url.meta_description_1}}</dd>
+                        </dl>
+                        <div ng-if="url.lint_results != {}">
+                            <strong>Lint Results</strong>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Description</th>
+                                        <th>Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="(code, details) in url.lint_results" ng-class="getLintLevel(code)">
+                                        <td>{{code}}</td>
+                                        <td>{{lintCodes[code]}}</td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div ng-if="url.body">
+                            <strong>Page Source</strong>
+                            <div class="well url-body">
+                                <pre data-language="html">{{url.body}}</pre>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <dl>
+                            <dt>Page Size</dt>
+                            <dd>{{url.size|filesize}}</dd>
+                            <dt>Response Time</dt>
+                            <dd>{{url.response_time|number}} seconds</dd>
+                            <dt>Response Code</dt>
+                            <dd><i class="glyphicon glyphicon-search" ng-click="addFilter('status_code', url.status_code)"></i> {{url.status_code}} <span ng-if="url.status">{{url.status}}</span></dd>
+                            <dt>Content Type</dt>
+                            <dd><i class="glyphicon glyphicon-search" ng-click="addFilter('content_type', url.content_type)"></i> {{url.content_type}}</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <h4>Overview</h4>
+        <div class="card">
+            <div class="card-body">
+                <dl>
+                    <dt>Total Size</dt>
+                    <dd>{{overview.size|filesize}}</dd>
+                    <dt>Time spent</dt>
+                    <dd>{{overview.response_time|number}} seconds</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>

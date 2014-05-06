@@ -1,0 +1,173 @@
+$icon-font-path: "/bower_components/bootstrap-sass-official/vendor/assets/fonts/bootstrap/";
+
+@import "_variables";
+@import 'bootstrap-sass-official/vendor/assets/stylesheets/bootstrap';
+
+// bower:scss
+@import "../bower_components/bootstrap-sass-official/vendor/assets/stylesheets/bootstrap.scss";
+// endbower
+
+@import "_fonts";
+
+
+$font-family-brand: "edmondsans", $font-family-sans-serif;
+
+
+/* Space out content a bit */
+body {
+    font-weight: 300;
+    padding-bottom: 20px;
+}
+
+dt {
+    margin-top: 10px;
+}
+
+dd {
+    margin-left: 10px;
+}
+
+.brand {
+    font-family: $font-family-brand;
+    text-transform: uppercase;
+    font-size: 18px;
+
+    strong {
+        color: $brand-primary;
+    }
+}
+
+.details {
+    margin-top: 20px;
+
+    .filters {
+        margin-bottom: 10px;
+        h4 {
+            .label {
+                font-weight: normal;
+                text-transform: uppercase;
+                margin-right: 5px;
+            }
+        }
+    }
+}
+
+.card {
+    $border-color: darken(#FFF, 7.5%);
+    background-color: white;
+    border: 1px solid $border-color;
+    padding: 0;
+    border-radius: $border-radius-small;
+
+    &:hover {
+        background-color: darken(#FFF, 1.5%);
+    }
+
+    &.active {
+        .card-body {
+            .details {
+                display: block;
+            }
+        }
+        background-color: $brand-warning;
+    }
+
+    &.card-warning {
+        background-color: $brand-warning;
+        color: white;
+    }
+    &.card-error {
+        background-color: $brand-danger;
+        color: white;
+    }
+
+    .card-header {
+        padding: 0 10px;
+        border-bottom: 1px solid $border-color;
+
+        h1,h2,h3,h4,h5 {
+            margin: 5px 0;
+            font-weight: bold;
+        }
+    }
+
+    .card-body {
+        padding: 10px;
+
+        h4 {
+            cursor: pointer;
+
+            .label {
+                margin-left: 5px;
+            }
+        }
+
+        .details {
+            display: none;
+        }
+    }
+}
+
+.url-body {
+    height: 200px;
+    overflow: scroll;
+    pre {
+        border: none;
+    }
+}
+
+.datapoint {
+
+    $border-color: darken(#FFF, 7.5%);
+    background-color: white;
+    border: 1px solid $border-color;
+    padding: 0;
+    margin: 0 2px;
+    border-radius: $border-radius-small;
+    
+
+    &.datapoint-danger {
+        .datapoint-value {
+            background-color: $brand-danger;
+        }
+    }
+
+    &.datapoint-warning {
+        .datapoint-value {
+            background-color: $brand-warning;
+        }
+    }
+
+    &.datapoint-info {
+        .datapoint-value {
+            background-color: $brand-info;
+        }
+    }
+
+    &.datapoint-default {
+        .datapoint-value {
+            background-color: $gray-dark;
+        }
+    }
+
+    .datapoint-value {
+        float: left;
+        width: 100px;
+        height: 60px;
+        line-height: 60px;
+        text-align: center;
+        color: white;
+        font-family: $font-family-brand;
+        font-weight: bold;
+        font-size: 16pt;
+        text-shadow: 0 1px 1px rgba(0,0,0,0.3);
+    }
+
+    .datapoint-label {
+        height: 60px;
+        text-align: center;
+        line-height: 60px;
+        font-size: 11pt;
+        font-weight: normal;
+    }
+}

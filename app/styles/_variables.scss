@@ -1,0 +1,27 @@
+
+$gray-dark:             #374767;
+$gray:                  #666;
+
+$brand-primary:         #428bca;
+$brand-success:         #5cb85c;
+$brand-info:            #5bc0de;
+$brand-warning:         #f0ad4e;
+$brand-danger:          #AE0A32;
+
+$body-bg:               #f2f4f8; // whitesmoke;
+$text-color:            $gray;
+
+$navbar-default-bg:                #FFF;
+$navbar-default-border:            darken($navbar-default-bg, 6.5%);
+
+$font-family-sans-serif:    "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+// $headings-font-family:      "edmondsans", $font-family-sans-serif;
+
+$font-size-base:          12px !default;
+
+$font-size-h1:            floor(($font-size-base * 2.6)) !default; // ~36px
+$font-size-h2:            floor(($font-size-base * 2.15)) !default; // ~30px
+$font-size-h3:            ceil(($font-size-base * 1.7)) !default; // ~24px
+$font-size-h4:            ceil(($font-size-base * 1.25)) !default; // ~18px
+$font-size-h5:            $font-size-base !default;
+$font-size-h6:            ceil(($font-size-base * 0.85)) !default; // ~12px
