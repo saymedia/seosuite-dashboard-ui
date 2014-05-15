@@ -79,6 +79,10 @@ dd {
     &.card-error {
         background-color: $brand-danger;
         color: white;
+
+        a {
+            color: white;
+        }
     }
 
     .card-header {

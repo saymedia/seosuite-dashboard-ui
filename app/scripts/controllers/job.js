@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('reclusedashApp')
-    .controller('JobCtrl', function($scope, $routeParams, CrawlUrl) {
+    .controller('JobCtrl', function($scope, $routeParams, CrawlUrl, CrawlLink) {
 
         $scope.totalUrlCount = 0;
         $scope.currentPage = 1;
@@ -83,27 +83,28 @@ angular.module('reclusedashApp')
             }
         };
 
+
         $scope.lintCodes = {
-            E02: 'has title',
-            W03: 'title < 58 chars',
-            E05: 'has meta description',
-            W06: 'meta description < 150 chars',
-            E08: 'has canonical',
-            E09: 'has h1',
-            I10: 'missing rel=prev',
-            I11: 'missing rel=next',
-            E12: 'title matches <1 h1 word',
-            E13: 'title matches <1 meta description word',
-            W14: 'title matches <3 h1 words',
-            W15: 'title matches <3 meta description word',
-            W16: '<300 outlinks on page',
-            E17: '<1000 outlinks on page',
-            W18: 'size < 200K',
-            W19: 'all img tags have alt attribute',
-            I20: 'has robots=nofollow',
-            I21: 'has robots=noindex',
-            C22: 'has head',
-            W23: 'h1 count > 1',
+            C22: 'No <head> section defined on the page',
+            E02: 'The page\'s <title> is missing',
+            E05: 'The page\'s meta description is missing',
+            E08: 'The page\'s canonical url is missing',
+            E09: 'No <h1> tags found on the page',
+            E12: 'Fewer than 1 word matches between the page\'s <title> and the first <h1> on the page',
+            E13: 'Fewer than 1 word matches between the page\'s <title> and the page\'s meta description',
+            E17: 'More than 1000 links were found on the page',
+            W03: 'The page\'s <title> was less than 58 characters',
+            W06: 'The page\'s meta description was less than 150 characters',
+            W14: 'The page\'s <title> matches fewer than 3 words with the first <h1>',
+            W15: 'The page\'s <title> matches fewer than 3 words with the page\'s meta description',
+            W16: 'More than 300 links were found on page',
+            W18: 'The size of the page\'s markup is greater 200K',
+            W19: 'Some of the <img> tags on the page were missing alt text',
+            W23: 'More than one <h1> tag was found on the page',
+            I10: 'No rel=prev links were found on the page',
+            I11: 'No rel=next links were found on the page',
+            I20: 'One or more links on the page has robots = nofollow',
+            I21: 'One or more links on the page has robots = noindex',
         };
 
         // CrawlUrl.job($routeParams.jobId, 0, 1)
@@ -125,6 +126,10 @@ angular.module('reclusedashApp')
             }
             else {
                 $scope.activeUrl = url;
+                // Load the inbound and outbound links on the page
+                CrawlLink.get({to_url: url.id}, function (res) {
+                    url.toLinks = res.objects;
+                });
             }
         };
 
