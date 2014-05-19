@@ -120,6 +120,13 @@ dd {
     }
 }
 
+.filters {
+    select {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
 .datapoint {
 
     $border-color: darken(#FFF, 7.5%);
@@ -128,6 +135,7 @@ dd {
     padding: 0;
     margin: 0 2px;
     border-radius: $border-radius-small;
+    cursor: pointer;
     
 
     &.datapoint-danger {

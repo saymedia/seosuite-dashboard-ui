@@ -1,27 +1,27 @@
 <div class="row">
     <div class="col-md-3">
-        <div class="datapoint datapoint-default clearfix">
+        <div class="datapoint datapoint-default clearfix" ng-click="addFilter('lint_critical__gte', 1)">
             <div class="datapoint-value">{{ overview.lint_critical }}</div>
             <div class="datapoint-label">Critical Issues</div>
         </div>
     </div>
 
     <div class="col-md-3">
-        <div class="datapoint datapoint-danger clearfix">
+        <div class="datapoint datapoint-danger clearfix" ng-click="addFilter('lint_error__gte', 1)">
             <div class="datapoint-value">{{ overview.lint_error }}</div>
             <div class="datapoint-label">Errors</div>
         </div>
     </div>
 
     <div class="col-md-3">
-        <div class="datapoint datapoint-warning clearfix">
+        <div class="datapoint datapoint-warning clearfix" ng-click="addFilter('lint_warning__gte', 1)">
             <div class="datapoint-value">{{ overview.lint_warn }}</div>
             <div class="datapoint-label">Warnings</div>
         </div>
     </div>
 
     <div class="col-md-3">
-        <div class="datapoint datapoint-info clearfix">
+        <div class="datapoint datapoint-info clearfix" ng-click="addFilter('lint_info__gte', 1)">
             <div class="datapoint-value">{{ overview.lint_info }}</div>
             <div class="datapoint-label">Notices</div>
         </div>
@@ -29,10 +29,10 @@
 </div>
 
 <div class="row details">
-    <div class="col-md-12">
+    <div class="col-md-9">
         <div class="row">
             <div class="col-md-12" ng-show="totalUrlCount > 20">
-                <pagination total-items="totalUrlCount" page="currentPage" items-per-page="itemsPerPage" class="pull-right"></pagination>
+                <pagination total-items="totalUrlCount" max-size="10" page="currentPage" items-per-page="itemsPerPage" class="pull-right" rotate="false" boundary-links="true"></pagination>
             </div>
         </div>
         <div class="row filters" ng-show="filters.length">
@@ -41,7 +41,7 @@
                     Fitlers:
                     <span class="label label-default filter" ng-repeat="filter in filters">
                         <i class="glyphicon glyphicon-remove" ng-click="removeFilter(filter[0], filter[1])"></i>
-                        {{filter[0]|replace:'_':' '}}: {{filter[1]}}
+                        {{filter[0]|replace:'_':' '|replace:'__gte':''}}: {{filter[1]}}
                     </span>
                 </h4>
             </div>
@@ -53,11 +53,13 @@
                   <span class="label label-warning pull-right">{{url.lint_warn}}</span>
                   <span class="label label-danger pull-right">{{url.lint_error}}</span>
                   <span class="label label-default pull-right">{{url.lint_critical}}</span>
-                  {{url.address}}
+                  {{url.address | truncate : 85}}
                 </h4>
                 <div ng-show="isActive(url)">
                     <div class="col-md-10">
                         <dl>
+                            <dt>Link</dt>
+                            <dd><a ng-href="{{url.address}}" target="_blank">{{url.address | truncate : 85}}</a></dd>
                             <dt ng-if="url.canonical">Canonical</dt>
                             <dd ng-if="url.canonical">{{url.canonical}}</dd>
                             <dt ng-if="url.title_1">Page Title</dt>
@@ -115,19 +117,17 @@
             </div>
         </div>
     </div>
-    <!--
-    <div class="col-md-2">
-        <h4>Overview</h4>
+    <div class="col-md-3 filters">
+        <h4>Filters</h4>
         <div class="card">
             <div class="card-body">
-                <dl>
-                    <dt>Total Size</dt>
-                    <dd>{{overview.size|filesize}}</dd>
-                    <dt>Time spent</dt>
-                    <dd>{{overview.response_time|number}} seconds</dd>
-                </dl>
+                <h5>HTTP Status Code</h5>
+                <select ng-options="value for (key, value) in httpCodes" ng-model="httpStatusCode" ng-change="updateFilter()"></select>
+
+                <h5>Content Types</h5>
+                <select ng-options="value for (key, value) in contentTypes" ng-model="contentType" ng-change="updateFilter()"></select>
+
             </div>
         </div>
     </div>
-    -->
 </div>
